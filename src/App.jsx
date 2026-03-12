@@ -3,35 +3,52 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { useRoutes } from 'react-router-dom';
-import { supabase } from 'client.js';
+import { supabase } from './client';
+import '@picocss/pico';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+    <main className="container">
+
+      <nav>
+        <ul>
+          <li><strong>My Pico App</strong></li>
+        </ul>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#" role="button">Login</a></li>
+        </ul>
+      </nav>
+
+      <section>
+        <h1>Welcome to React + Pico</h1>
+        <p>Pico styles standard elements automatically. No complex classes needed!</p>
+
+        <div className="grid">
+          <article>
+            <header>Card Header</header>
+            This is a card created using the <code>&lt;article&gt;</code> tag.
+            <footer>
+              <button className="secondary">
+                Secondary Action
+              </button>
+            </footer>
+          </article>
+
+          <article>
+            <header>Form Example</header>
+            <form>
+              <input type="text" placeholder="Enter your name" aria-label="Name" />
+              <button type="submit">Submit</button>
+            </form>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  );
 }
 
-export default App
+export default App;
