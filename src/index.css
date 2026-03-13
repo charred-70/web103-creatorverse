@@ -7,6 +7,24 @@ body,
   height: 100%;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.wrapper {
+  max-width: 50rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
 
 /* Stars.css */
 .star-container {
@@ -62,4 +80,70 @@ body,
 
 main.container {
   padding-top: 2rem;
+}
+
+.wavy {
+  /* 1. POSITIONING: The 'Bleed' Technique */
+  position: absolute;
+  left: 0;
+  width: 100%;
+
+  /* We make it slightly taller than 50% and push the excess off-screen */
+  height: 51vh;
+  bottom: -2vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* 2. BACKGROUND */
+  background: linear-gradient(120deg, #1a0b2e, #4a1b9a, #443d7a, #1a0b2e);
+  background-size: 300% 300%;
+
+  /* Give the clouds room at the top */
+  padding-top: 60px;
+
+  animation:
+    gradientMove 25s ease infinite,
+    cloudDrift 20s linear infinite;
+
+  filter: drop-shadow(0 -20px 30px rgba(106, 27, 154, 0.4));
+
+  /* 3. THE MASK: Reverted to your exact successful cloud math */
+  --mask:
+    radial-gradient(50px at 50% 75px, #000 99%, #0000 101%) calc(50% - 50px) 25px / 100px 100% repeat-x,
+    radial-gradient(50px at 50% -35px, #0000 99%, #000 101%) 50% 50px / 100px 100% repeat-x;
+
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}
+
+@keyframes cloudDrift {
+  from {
+    mask-position: 0 25px, 0 50px;
+    -webkit-mask-position: 0 25px, 0 50px;
+  }
+
+  to {
+    mask-position: 1000px 25px, 1000px 50px;
+    -webkit-mask-position: 1000px 25px, 1000px 50px;
+  }
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+section {
+  padding-block: 0;
 }
