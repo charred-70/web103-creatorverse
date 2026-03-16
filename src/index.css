@@ -147,3 +147,11 @@ main.container {
 section {
   padding-block: 0;
 }
+
+.button {
+  margin: 10px;
+}
+
+.header {
+  margin-top: 120px;
+}

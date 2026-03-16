@@ -1,42 +1,70 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
 import { useRoutes } from 'react-router-dom';
 import { supabase } from './client';
 import '@picocss/pico';
 import Stars from './components/stars';
+import { Sparkles } from 'lucide-react';
+import EditCreator from './pages/EditCreator'
+import AddCreator from './pages/AddCreator'
+import ShowCreators from './pages/showCreators'
+import ViewCreator from './pages/ViewCreator'
+
 
 
 function App() {
+  const [creators, setCreators] = useState([]);
+  const [showCreators, setShowCreators] = useState(false);
+  const [showAddCreators, setShowAddCreators] = useState(false);
+
+  useEffect(() => {
+    const getCreators = async () => {
+      const { data, error } = await supabase
+        .from("creators")
+        .select();
+
+      if (error) {
+        console.error("Error fetching creators:", error.message);
+      } else {
+        setCreators(data);
+      }
+    };
+
+    getCreators();
+  }, []);
+
+  function showAddScreen() {
+    setShowAddCreators(!showAddCreators)
+    setShowCreators(false)
+  }
+
+  function showClick() {
+    setShowCreators(!showCreators)
+    setShowAddCreators(false)
+  }
+
   return (
 
     <>
       <Stars>
         <main className="container">
-          <nav>
-            <ul>
-              <li><strong>My Pico App</strong></li>
-            </ul>
-            <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#" role="button">Login</a></li>
-            </ul>
-          </nav>
-
-          <section>
-            <h1>Welcome to React + Pico</h1>
-            <p>Pico styles standard elements automatically. No complex classes needed!</p>
 
 
+          <section class="header">
+            <h1><Sparkles /> Creatorverse <Sparkles /></h1>
+            <button class="button" onClick={() => showClick()}>View All Creators</button>
+            <button class="button" onClick={() => showAddScreen()}>Add Creator</button>
           </section>
 
         </main>
 
         <section class="wavy">
           <div class="wrapper">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque cum, perspiciatis a illo veniam ratione expedita assumenda laboriosam modi error maiores fugit soluta vitae temporibus voluptatum ducimus culpa similique quaerat?</p>
+            {showAddCreators ? (
+              <AddCreator />
+            ) : (
+              <ShowCreators creators={creators} />
+            )}
           </div>
         </section>
       </Stars>
