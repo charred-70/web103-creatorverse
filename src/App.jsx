@@ -1,75 +1,73 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import { useRoutes } from 'react-router-dom';
-import { supabase } from './client';
-import '@picocss/pico';
-import Stars from './components/stars';
-import { Sparkles } from 'lucide-react';
-import EditCreator from './pages/EditCreator'
+import { supabase } from './client'
+import '@picocss/pico'
+import Stars from './components/stars'
+import { Sparkles, Users, PlusCircle } from 'lucide-react'
 import AddCreator from './pages/AddCreator'
 import ShowCreators from './pages/showCreators'
-import ViewCreator from './pages/ViewCreator'
-
-
 
 function App() {
-  const [creators, setCreators] = useState([]);
-  const [showCreators, setShowCreators] = useState(false);
-  const [showAddCreators, setShowAddCreators] = useState(false);
+  const [creators, setCreators] = useState([])
+  const [activeView, setActiveView] = useState('creators')
 
   useEffect(() => {
     const getCreators = async () => {
-      const { data, error } = await supabase
-        .from("creators")
-        .select();
-
+      const { data, error } = await supabase.from('creators').select()
       if (error) {
-        console.error("Error fetching creators:", error.message);
+        console.error('Error fetching creators:', error.message)
       } else {
-        setCreators(data);
+        setCreators(data)
       }
-    };
-
-    getCreators();
-  }, []);
-
-  function showAddScreen() {
-    setShowAddCreators(!showAddCreators)
-    setShowCreators(false)
-  }
-
-  function showClick() {
-    setShowCreators(!showCreators)
-    setShowAddCreators(false)
-  }
+    }
+    getCreators()
+  }, [])
 
   return (
+    <Stars>
+      <main className="container">
+        <section className="header">
 
-    <>
-      <Stars>
-        <main className="container">
+          <h1>
+            <Sparkles size={28} />
+            Creatorverse
+            <Sparkles size={28} />
+          </h1>
 
-
-          <section class="header">
-            <h1><Sparkles /> Creatorverse <Sparkles /></h1>
-            <button class="button" onClick={() => showClick()}>View All Creators</button>
-            <button class="button" onClick={() => showAddScreen()}>Add Creator</button>
-          </section>
-
-        </main>
-
-        <section class="wavy">
-          <div class="wrapper">
-            {showAddCreators ? (
-              <AddCreator />
-            ) : (
-              <ShowCreators creators={creators} />
-            )}
+          <div className="header-buttons">
+            <button
+              className={`header-btn${activeView === 'creators' ? ' active' : ''}`}
+              onClick={() => setActiveView('creators')}
+            >
+              <Users size={16} />
+              View Creators
+            </button>
+            <button
+              className={`header-btn${activeView === 'add' ? ' active' : ''}`}
+              onClick={() => setActiveView('add')}
+            >
+              <PlusCircle size={16} />
+              Add Creator
+            </button>
           </div>
+
         </section>
-      </Stars>
-    </>
-  );
+      </main>
+
+      <div className="wavy">
+        {/* Background only — mask lives here, never touches content */}
+        <div className="wavy-bg" />
+
+        {/* Content — no mask, full width, padding clears cloud edge */}
+        <div className="wavy-content">
+          {activeView === 'add'
+            ? <AddCreator />
+            : <ShowCreators creators={creators} />
+          }
+        </div>
+      </div>
+    </Stars>
+  )
 }
 
-export default App;
+export default App
