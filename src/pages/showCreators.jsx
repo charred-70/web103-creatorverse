@@ -1,7 +1,7 @@
 import React from 'react'
 import CreatorCard from '../components/contentCreator.jsx'
 
-const ShowCreators = ({ creators }) => {
+const ShowCreators = ({ creators, onView, onEdit, onDelete }) => {
     if (!creators || creators.length === 0) {
         return (
             <p className="cards-empty">
@@ -13,7 +13,7 @@ const ShowCreators = ({ creators }) => {
     return (
         <div className="cards-grid">
             {creators.map((creator) => (
-                <CreatorCard key={creator.id} creator={creator} />
+                <CreatorCard key={creator.id} creator={creator} onView={onView} onEdit={onEdit} onDelete={onDelete} />
             ))}
         </div>
     )

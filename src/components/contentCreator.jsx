@@ -1,14 +1,22 @@
 import React from 'react'
 import { Youtube, Twitter, Instagram } from 'lucide-react'
 
-const CreatorCard = ({ creator }) => {
-    const { name, imgURL, description, youtube, twitter, instagram } = creator
+const CreatorCard = ({ creator, onView, onEdit, onDelete }) => {
+    console.log(creator)
+    const {
+        name,
+        imageURL,
+        description,
+        YouTube: youtubeUrl,
+        Twitter: twitterUrl,
+        Instagram: instagramUrl
+    } = creator
 
     return (
-        <div className="creator-card">
+        <div className="creator-card" onClick={() => onView(creator)}>
             <img
                 className="card-avatar"
-                src={imgURL}
+                src={imageURL}
                 alt={name}
                 onError={(e) => {
                     e.target.style.display = 'none'
@@ -20,10 +28,10 @@ const CreatorCard = ({ creator }) => {
                     <p className="card-desc">{description}</p>
                 )}
                 <div className="card-links">
-                    {youtube && (
+                    {youtubeUrl && (
                         <a
                             className="card-link"
-                            href={youtube}
+                            href={youtubeUrl}
                             target="_blank"
                             rel="noreferrer"
                         >
@@ -31,10 +39,10 @@ const CreatorCard = ({ creator }) => {
                             YouTube
                         </a>
                     )}
-                    {twitter && (
+                    {twitterUrl && (
                         <a
                             className="card-link"
-                            href={twitter}
+                            href={twitterUrl}
                             target="_blank"
                             rel="noreferrer"
                         >
@@ -42,10 +50,10 @@ const CreatorCard = ({ creator }) => {
                             Twitter
                         </a>
                     )}
-                    {instagram && (
+                    {instagramUrl && (
                         <a
                             className="card-link"
-                            href={instagram}
+                            href={instagramUrl}
                             target="_blank"
                             rel="noreferrer"
                         >
@@ -53,6 +61,11 @@ const CreatorCard = ({ creator }) => {
                             Instagram
                         </a>
                     )}
+                </div>
+                <div className="card-divider" />
+                <div className="card-actions">
+                    <button className="card-btn edit" onClick={e => { e.stopPropagation(); onEdit(creator) }}>Edit</button>
+                    <button className="card-btn delete" onClick={e => { e.stopPropagation(); onDelete(creator) }}>Delete</button>
                 </div>
             </div>
         </div>

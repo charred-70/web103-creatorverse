@@ -6,10 +6,13 @@ import Stars from './components/stars'
 import { Sparkles, Users, PlusCircle } from 'lucide-react'
 import AddCreator from './pages/AddCreator'
 import ShowCreators from './pages/showCreators'
+import ViewCreator from './pages/ViewCreator'
+import EditCreator from './pages/EditCreator'
 
 function App() {
   const [creators, setCreators] = useState([])
   const [activeView, setActiveView] = useState('creators')
+  const [selectedCreator, setSelectedCreator] = useState(null)
 
   useEffect(() => {
     const getCreators = async () => {
@@ -24,6 +27,24 @@ function App() {
     }
     getCreators()
   }, [])
+
+  const goToView = (creator) => {
+    setSelectedCreator(creator)
+    setActiveView('view')
+  }
+
+  const goToEdit = (creator) => {
+    setSelectedCreator(creator)
+    setActiveView('edit')
+  }
+
+  const handleDelete = async (creator) => {
+    const { error } = await supabase.from('creators').delete().eq('id', creator.id)
+    if (!error) {
+      setCreators(prev => prev.filter(c => c.id !== creator.id))
+      setActiveView('creators')
+    }
+  }
 
   return (
     <Stars>
@@ -60,10 +81,10 @@ function App() {
         <div className="wavy-bg" />
 
         <div className="wavy-content">
-          {activeView === 'add'
-            ? <AddCreator creators={setCreators} />
-            : <ShowCreators creators={creators} />
-          }
+          {activeView === 'add' && <AddCreator setCreators={setCreators} />}
+          {activeView === 'creators' && <ShowCreators creators={creators} onView={goToView} onEdit={goToEdit} onDelete={handleDelete} />}
+          {activeView === 'view' && <ViewCreator creator={selectedCreator} onEdit={goToEdit} onDelete={handleDelete} onBack={() => setActiveView('creators')} />}
+          {activeView === 'edit' && <EditCreator creator={selectedCreator} setCreators={setCreators} onBack={() => setActiveView('creators')} />}
         </div>
       </div>
     </Stars>
