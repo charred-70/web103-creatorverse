@@ -14,6 +14,8 @@ function App() {
   useEffect(() => {
     const getCreators = async () => {
       const { data, error } = await supabase.from('creators').select()
+      console.log('data: ', data)
+      console.log('error: ', error)
       if (error) {
         console.error('Error fetching creators:', error.message)
       } else {
@@ -55,13 +57,11 @@ function App() {
       </main>
 
       <div className="wavy">
-        {/* Background only — mask lives here, never touches content */}
         <div className="wavy-bg" />
 
-        {/* Content — no mask, full width, padding clears cloud edge */}
         <div className="wavy-content">
           {activeView === 'add'
-            ? <AddCreator />
+            ? <AddCreator creators={setCreators} />
             : <ShowCreators creators={creators} />
           }
         </div>

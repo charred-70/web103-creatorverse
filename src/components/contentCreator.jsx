@@ -2,13 +2,13 @@ import React from 'react'
 import { Youtube, Twitter, Instagram } from 'lucide-react'
 
 const CreatorCard = ({ creator }) => {
-    const { name, img, description, youtube, twitter, instagram } = creator
+    const { name, imgURL, description, youtube, twitter, instagram } = creator
 
     return (
         <div className="creator-card">
             <img
                 className="card-avatar"
-                src={img}
+                src={imgURL}
                 alt={name}
                 onError={(e) => {
                     e.target.style.display = 'none'

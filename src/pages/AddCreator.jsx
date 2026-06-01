@@ -2,17 +2,18 @@ import React from 'react'
 import { useState } from 'react'
 import { supabase } from '../client'
 
-const AddCreator = () => {
+const AddCreator = ({ setCreators }) => {
     const [formData, setFormData] = useState({
         name: '',
-        image_url: '',
+        YouTube: '',
         description: '',
-        youtube: '',
-        twitter: '',
-        instagram: '',
+        imageURL: '',
+        Twitter: '',
+        Instagram: '',
     })
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
+    const [success, setSuccess] = useState(false)
 
     const handleChange = (e) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -21,16 +22,19 @@ const AddCreator = () => {
     const handleSubmit = async () => {
         setLoading(true)
         setError(null)
+        setSuccess(false)
 
-        const { error } = await supabase
+        const { data, error } = await supabase
             .from('creators')
             .insert([formData])
+            .select()
 
         if (error) {
             setError(error.message)
         } else {
-
-            setFormData({ name: '', image_url: '', description: '', youtube: '', twitter: '', instagram: '' })
+            setCreators(prev => [...prev, data[0]])
+            setFormData({ name: '', imageURL: '', description: '', YouTube: '', Twitter: '', Instagram: '' })
+            setSuccess(true)
         }
 
         setLoading(false)
@@ -47,8 +51,8 @@ const AddCreator = () => {
 
             <div className="field-group">
                 <p className="field-label">Image URL</p>
-                <input name="image_url" type='text' placeholder='https://...'
-                    value={formData.image_url} onChange={handleChange} />
+                <input name="imageURL" type='text' placeholder='https://...'
+                    value={formData.imageURL} onChange={handleChange} />
             </div>
 
             <div className="field-group">
@@ -61,23 +65,24 @@ const AddCreator = () => {
 
             <div className="field-group">
                 <p className="field-label">YouTube</p>
-                <input name="youtube" type='text' placeholder='https://youtube.com/@...'
-                    value={formData.youtube} onChange={handleChange} />
+                <input name="YouTube" type='text' placeholder='https://youtube.com/@...'
+                    value={formData.YouTube} onChange={handleChange} />
             </div>
 
             <div className="field-group">
                 <p className="field-label">Twitter</p>
-                <input name="twitter" type='text' placeholder='https://twitter.com/...'
-                    value={formData.twitter} onChange={handleChange} />
+                <input name="Twitter" type='text' placeholder='https://twitter.com/...'
+                    value={formData.Twitter} onChange={handleChange} />
             </div>
 
             <div className="field-group">
                 <p className="field-label">Instagram</p>
-                <input name="instagram" type='text' placeholder='https://instagram.com/...'
-                    value={formData.instagram} onChange={handleChange} />
+                <input name="Instagram" type='text' placeholder='https://instagram.com/...'
+                    value={formData.Instagram} onChange={handleChange} />
             </div>
 
             {error && <p style={{ color: 'red' }}>{error}</p>}
+            {success && <p style={{ color: 'green' }}>Creator added successfully!</p>}
 
             <button className="form-submit" onClick={handleSubmit} disabled={loading}>
                 {loading ? 'Adding...' : 'Add Creator'}

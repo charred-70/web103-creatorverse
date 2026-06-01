@@ -5,7 +5,7 @@ const ShowCreators = ({ creators }) => {
     if (!creators || creators.length === 0) {
         return (
             <p className="cards-empty">
-                No creators yet — add one to get started!
+                No creators yet... add one to get started!
             </p>
         )
     }

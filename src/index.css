@@ -20,8 +20,6 @@ body {
 }
 
 
-/* ─── Background ──────────────────────────────────────── */
-
 .star-container {
   position: relative;
   min-height: 100vh;
@@ -35,8 +33,6 @@ body {
   align-items: center;
 }
 
-
-/* ─── Nebula blobs ────────────────────────────────────── */
 
 .nebula {
   position: absolute;
@@ -74,7 +70,6 @@ body {
 }
 
 
-/* ─── Star layers ─────────────────────────────────────── */
 
 #stars {
   position: fixed;
@@ -141,7 +136,6 @@ body {
 }
 
 
-/* ─── Depth cues ──────────────────────────────────────── */
 
 .shimmer-line {
   position: absolute;
@@ -175,7 +169,6 @@ body {
 }
 
 
-/* ─── Animations ──────────────────────────────────────── */
 
 @keyframes animStar {
   from {
@@ -240,7 +233,6 @@ body {
 }
 
 
-/* ─── Content layer ───────────────────────────────────── */
 
 .content {
   position: relative;
@@ -259,7 +251,6 @@ main.container {
 }
 
 
-/* ─── Header ──────────────────────────────────────────── */
 
 .header {
   margin-top: 50px;
@@ -325,7 +316,6 @@ main.container {
 }
 
 
-/* ─── Wavy section ────────────────────────────────────── */
 
 .wavy {
   position: relative;
@@ -334,7 +324,6 @@ main.container {
   z-index: 10;
 }
 
-/* Mask lives here only — no children, never clips content */
 .wavy-bg {
   position: absolute;
   inset: 0;
@@ -351,14 +340,11 @@ main.container {
   mask: var(--mask);
 }
 
-/* Content sits above the mask layer, never clipped */
 .wavy-content {
   position: relative;
   z-index: 2;
-  /* 90px clears the cloud scallop peaks comfortably */
   padding-top: 90px;
   padding-bottom: 80px;
-  /* Full width — let children control their own max-width */
   width: 100%;
   padding-inline: 24px;
   display: flex;
@@ -367,7 +353,6 @@ main.container {
 }
 
 
-/* ─── Creator cards ───────────────────────────────────── */
 
 .cards-grid {
   width: 100%;
@@ -401,7 +386,6 @@ main.container {
   aspect-ratio: 1;
   object-fit: cover;
   display: block;
-  /* Fallback gradient when no image */
   background: linear-gradient(135deg, #2d1060 0%, #1a3a80 100%);
 }
 
@@ -469,10 +453,8 @@ main.container {
 }
 
 
-/* ─── Form (AddCreator) ───────────────────────────────── */
 
 .form-section {
-  /* Full width of wavy-content, no extra max-width constraint */
   width: 100%;
   display: flex;
   flex-direction: column;
