@@ -1,10 +1,10 @@
-# WEB103 Prework - * Creatorverse*
+# WEB103 Prework - *Creatorverse*
 
-Submitted by: ** Charlynn Nguyen**
+Submitted by: **Charlynn Nguyen**
 
-About this web app: ** app description here**
+About this web app: **app description here**
 
-Time spent: ** 10** hours
+Time spent: **12** hours
 
 ## Required Features
 
@@ -47,7 +47,7 @@ Describe any challenges encountered while building the app or any additional con
 
 ## License
 
-Copyright [👉🏿 yyyy] [👉🏿 name of copyright owner]
+Copyright [2026] [Charlynn Nguyen]
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
