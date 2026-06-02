@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { supabase } from '../client'
-
-const EditCreator = ({ creator, setCreators, onBack }) => {
+import ConfirmDelete from '../components/confirmDelete'
+const EditCreator = ({ creator, setCreators, onBack, onDelete }) => {
     const [formData, setFormData] = useState({ ...creator })
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
+    const [showConfirm, setShowConfirm] = useState(false)
 
     const handleChange = (e) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -32,7 +33,13 @@ const EditCreator = ({ creator, setCreators, onBack }) => {
 
     return (
         <section className="form-section">
-            <button onClick={onBack}>← Back</button>
+            {showConfirm && (
+                <ConfirmDelete
+                    creatorName={creator.name}
+                    onConfirm={() => onDelete(creator)}
+                    onCancel={() => setShowConfirm(false)}
+                />
+            )}
             <div className="field-group">
                 <p className="field-label">Name</p>
                 <input name="name" type="text" value={formData.name} onChange={handleChange} />
@@ -60,6 +67,9 @@ const EditCreator = ({ creator, setCreators, onBack }) => {
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <button className="form-submit" onClick={handleSubmit} disabled={loading}>
                 {loading ? 'Saving...' : 'Save Changes'}
+            </button>
+            <button className="card-btn delete" onClick={() => setShowConfirm(true)}>
+                Delete Creator
             </button>
         </section>
     )
